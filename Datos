@@ -129,3 +129,19 @@ END$$
 
 DELIMITER ;
 
+
+
+DELIMITER $$
+USE `funes`$$
+CREATE PROCEDURE `Id_Usuario` (pNick varchar(45))
+BEGIN
+
+select U.idUsuario from funes.usuario as U
+where U.Nick=pNick;
+
+
+END$$
+
+DELIMITER ;
+
+
