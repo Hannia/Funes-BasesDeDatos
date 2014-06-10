@@ -6,9 +6,9 @@ alter table funes.institucionlabora drop column Nombre;
 
 /*Crea la tabla Institucion */ 
 CREATE TABLE institucion(
+    Id_institucion int primary key not null auto_increment, 
 	nombre varchar(45)
 	);
-
 
 /*procedimiento para insertar la Institucion */
 DELIMITER $$
@@ -22,13 +22,15 @@ VALUES
 END $$
 Delimiter ;
 
-/* Agrega la columna Id de la institucion*/
-ALTER TABLE Funes.InstitucionLabora ADD 
-idInstitucion INT;
+/*Agrega la columna para la foreign key */ 
+alter table funes.institucionlabora add id_Institucion int;
 
+/* Agrega la columna Id de la institucion (FK)*/
+ALTER TABLE Funes.InstitucionLabora ADD constraint Fk_Id_Institucion
+foreign key (id_Institucion)  references funes.institucion (Id_institucion);
 
 /* Modifica la columna fechaInicio de la tabla institucion a null */
 alter table funes.institucionlabora modify column FechaInicio date null;
 
-/* Modifica la columna fechaFin de la tabla institucion a null */
+/* Modifica la columna fechafin de la tabla institucion a null */
 alter table funes.institucionlabora modify column FechaFin date null;
