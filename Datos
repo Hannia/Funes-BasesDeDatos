@@ -1,0 +1,131 @@
+USE `funes`;
+
+
+/* Devolver el idPersonaJuridica recibe la cedula juridica ya que esta es unica  */
+DELIMITER $$
+CREATE PROCEDURE `Id_PersonaJuridica` (CedulaJur varchar(45))
+BEGIN
+
+select Pj.idPersonaJuridica from funes.personajuridica as Pj
+where Pj.Cedula=CedulaJur;
+
+END$$
+
+DELIMITER ;
+
+
+/* Mostrar la direccion de una persona fisica */
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Mostrar_Direc`(IdPersonaJurid int)
+BEGIN
+
+select Direc.Señal,P.Nombre,C.Nombre,D.Nombre,B.Nombre from funes.direccion as Direc,funes.provincia as P,funes.canton as C,funes.distrito as D,funes.barrio as B,funes.personajuridica as PJ
+where PJ.idPersonaJuridica=IdPersonaJurid and P.idProvincia=Direc.IdProvincia and C.idCanton=Direc.idCanton and D.idDistrito=Direc.idDistrito and B.idBarrio=Direc.idBarrio;
+
+
+END$$
+
+DELIMITER ;
+
+
+/* Devolver el Id_Persona fisica esta recibe la cedula ya que es unica */
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Id_Persona`(pCedula int)
+BEGIN
+
+select Person.idPersonaFisica from funes.personafisica as Person 
+where Person.Cedula=pCedula;
+
+END$$
+
+DELIMITER ;
+
+
+/*Devuelve el Id_Genero */ 
+DELIMITER $$
+
+CREATE PROCEDURE `Id_Genero` (ptipoG varchar (10))
+BEGIN
+select Genero.idGenero from funes.genero as Genero
+where Genero.Tipo=ptipoG;
+END$$
+
+DELIMITER ;
+
+/* Devuelve el id calificacion */ 
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Id_Calificacion`(pCalificacion int)
+BEGIN
+select Cali.idCalificacion from calificacion as Cali
+where Cali.Calificacion=pCalificacion;
+END$$
+
+DELIMITER ;
+
+
+/* Devuelve el Id_Provincia */ 
+DELIMITER $$
+USE `funes`$$
+CREATE PROCEDURE `Id_Provincia` (pNombre varchar(25))
+BEGIN
+
+select Pro.idProvincia from funes.provincia as Pro 
+where Pro.Nombre=pNombre;
+
+END$$
+
+DELIMITER ;
+
+/*Devolver el id del Canton*/
+DELIMITER $$
+USE `funes`$$
+CREATE PROCEDURE `Id_Canton` (pCanton varchar(25))
+BEGIN
+select Can.idCanton from funes.canton as Can 
+where Can.Nombre=pCanton;
+END$$
+
+DELIMITER ;
+
+/* Devolver el id del distrito */ 
+DELIMITER $$
+USE `funes`$$
+CREATE PROCEDURE `Id_Distrito` (pNombre varchar(25))
+BEGIN
+select dist.idDistrito from funes.distrito as dist
+where dist.Nombre=pNombre;
+END$$
+
+DELIMITER ;
+
+/* Devuelve el id del Barrio */
+DELIMITER $$
+USE `funes`$$
+CREATE PROCEDURE `Id_Barrio` (pNombre varchar(30))
+BEGIN
+
+select Barr.idBarrio from funes.barrio as Barr
+where Barr.Nombre=pNombre;
+
+END$$
+
+DELIMITER ;
+
+
+/*Devuelve el Id de pais */
+
+DELIMITER $$
+USE `funes`$$
+CREATE PROCEDURE `Id_pais` (pNombre varchar(45))
+BEGIN
+
+select Pais.idPais from funes.pais as Pais
+where Pais.Nombre=pNombre;
+
+END$$
+
+DELIMITER ;
+
