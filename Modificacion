@@ -30,5 +30,5 @@ idInstitucion INT;
 /* Modifica la columna fechaInicio de la tabla institucion a null */
 alter table funes.institucionlabora modify column FechaInicio date null;
 
-/* Modifica la columna fechaInicio de la tabla institucion a null */
+/* Modifica la columna fechaFin de la tabla institucion a null */
 alter table funes.institucionlabora modify column FechaFin date null;
