@@ -34,3 +34,26 @@ alter table funes.institucionlabora modify column FechaInicio date null;
 
 /* Modifica la columna fechafin de la tabla institucion a null */
 alter table funes.institucionlabora modify column FechaFin date null;
+
+
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertarInstitucionLabora`(
+pIdInstitucion int,
+pFechaInicio varchar(25),
+pFechaFin varchar(25),
+pIdCargo int)
+BEGIN
+INSERT INTO `Funes`.`InstitucionLabora`
+(`idInstitucion`,
+`FechaInicio`,
+`FechaFin`,
+`idCargo`)
+VALUES
+(pIdInstitucion,
+pFechaInicio,
+pFechaFin,
+pIdCargo
+);
+END
+
