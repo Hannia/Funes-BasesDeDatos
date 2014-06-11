@@ -1,5 +1,5 @@
 use funes;
-/*--Insercion de provincias*/
+/*--Insercion de provincias */
 
 
 INSERT INTO `funes`.`provincia`
