@@ -1,0 +1,84 @@
+/* Muestra el nombre y cedula de la persona fisica en la categoria que se encuentra*/
+DELIMITER $$
+USE `funes`$$
+CREATE PROCEDURE `PersonaF_x_Categoria` (pIdCategoria int)
+BEGIN
+
+select Person.Nombe, Person.Cedula from  funes.personafisica as Person,funes.categoriaporpersonafisica as CxPxF
+where CxPxF.idCategoria=pIdCategoria and Person.idPersonaFisica=CxPxF.idPersona;
+
+
+END$$
+
+DELIMITER ;
+
+/*Creado por Annia Gomez Blanco 3:30
+retorna el nombre y cedula de la persona juridica en la categoria que se encuentra*/
+DELIMITER $$
+USE `funes`$$
+CREATE PROCEDURE `Categoria_x_PersonaJuri` (pIdCategoria int)
+BEGIN
+
+select PersonJ.Nombre,PersonJ.Cedula from funes.personajuridica as PersonJ, funes.personaporcategoriajuridica as PCJ
+where PCJ.idCategoriaEntidad=pIdCategoria and PersonJ.idPersonaJuridica=PCJ.idPersonaJuridica;
+
+
+END$$
+
+/*Creado por Annia Gomez Blanco 10/06/2014 5:13
+Recibe como parametros el IdPersona fisica la cual desea mostrar su informacion
+retorna la Cedula, el nombre,primer apellido, Segundo Apellido,
+fecha de nacimiento, su genero, la calificación y review que recibió
+condiciones: Debe el idPersona Fisica debe de existir*/
+
+DELIMITER ;
+
+/* Muestra la informacion de la persona fisica, calificacion y review */
+DELIMITER $$
+USE `funes`$$
+CREATE PROCEDURE `Consulta_Personas` (pId_PersonaFis int)
+BEGIN
+
+select PF.Cedula,PF.Nombe,PF.PrimerApellido,PF.SegundoApellido,PF.FechaNacimiento,G.Tipo ,Calif.Calificacion, CaliPerFis.review 
+from funes.personafisica as PF, funes.califpersfis as CaliPerFis, funes.calificacion as Calif, funes.genero as G
+where PF.idPersonaFisica =pId_PersonaFis  and  CaliPerFis.idPersona=PF.idPersonaFisica and PF.idGenero=G.idGenero  and  CaliPerFis.idCalifcacion=
+Calif.idCalificacion;
+
+
+END$$
+
+DELIMITER ;
+
+/*Creado por Annia Gomez Blanco 10/06/2014 7:25
+Recibe como parametros el IdPersona Juridica la cual desea mostrar su informacion
+retorna la Cedula juridica, el nombre, la calificación y review que recibió
+condiciones: Debe el idPersona juridica debe de existir*/
+USE `funes`;
+DROP procedure IF EXISTS `Consulta_PersonaJuridica`;
+
+DELIMITER $$
+USE `funes`$$
+CREATE PROCEDURE `Consulta_PersonaJuridica` (pIdPersonaJ int)
+BEGIN
+
+select PJ.Cedula, PJ.Nombre,Calif.Calificacion,CalifperJuri.review
+from funes.personajuridica as PJ, funes.calif_per_juridica as CalifperJuri, funes.calificacion as Calif
+where PJ.idPersonaJuridica=pIdPersonaJ 
+and CalifperJuri.idCalificacion=Calif.idCalificacion 
+and CalifperJuri.idPersonaJuridica=PJ.idPersonaJuridica; 
+
+
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+USE `funes`$$
+CREATE PROCEDURE `Calcular_Edad` ()
+BEGIN
+select (year(curdate())) -year(PF.FechaNacimiento) -(right(curdate(),5)<right(PF.FechaNacimiento,5)) as age from funes.personafisica as PF
+where PF.Cedula=pCedula;
+
+END$$
+
+DELIMITER ;
