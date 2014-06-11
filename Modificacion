@@ -1,0 +1,69 @@
+use funes;
+
+/*Elimina el La columna Nombre de la tabla InstitucionLabora*/ 
+alter table funes.institucionlabora drop column Nombre;
+
+
+/*Crea la tabla Institucion */ 
+CREATE TABLE institucion(
+    Id_institucion int primary key not null auto_increment, 
+	nombre varchar(45)
+	);
+
+/*Agrega la columna review para que justifique su calificacion */
+alter table funes.califpersfis add review varchar(200);
+
+alter table funes.calif_per_juridica add review varchar(200);
+
+
+/*procedimiento para insertar la Institucion */
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertarInstitucion`(pNombre varchar(45))
+BEGIN
+INSERT INTO `Funes`.`Institucion`
+(`nombre`)
+VALUES
+(pNombre);
+
+END $$
+Delimiter ;
+
+/*Agrega la columna para la foreign key */ 
+alter table funes.institucionlabora add id_Institucion int;
+
+/* Agrega la columna Id de la institucion (FK)*/
+ALTER TABLE Funes.InstitucionLabora ADD constraint Fk_Id_Institucion
+foreign key (id_Institucion)  references funes.institucion (Id_institucion);
+
+/* Modifica la columna fechaInicio de la tabla institucion a null */
+alter table funes.institucionlabora modify column FechaInicio date null;
+
+/* Modifica la columna fechafin de la tabla institucion a null */
+alter table funes.institucionlabora modify column FechaFin date null;
+
+
+DROP procedure IF EXISTS `insertarInstitucionLabora`;
+
+
+DELIMITER $$
+USE `funes`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertarInstitucionLabora`(
+pIdInstitucion int,
+pFechaInicio varchar(25),
+pFechaFin varchar(25),
+pIdCargo int)
+BEGIN
+INSERT INTO `Funes`.`InstitucionLabora`
+(`idInstitucion`,
+`FechaInicio`,
+`FechaFin`,
+`idCargo`)
+VALUES
+(pIdInstitucion,
+pFechaInicio,
+pFechaFin,
+pIdCargo
+);
+END$$
+
+DELIMITER ;
